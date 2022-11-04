@@ -1,22 +1,33 @@
+import 'package:flutter/cupertino.dart';
+
+import '../../../../core/stores/contador.store.dart';
 import '../../data/repositories/contato_repository.dart';
-import '../../domain/entities/contador_entity.dart';
 
-class ContadorController {
+class ContadorController with ChangeNotifier {
   final ContadorRepository repository;
-  ContadorController(this.repository);
-
-
-  ContadorEntity get entity  => repository.getContador();
+  final ContadorStore store;
+  ContadorController(this.repository, this.store) {
+    store.entity = repository.getContador();
+    notifyListeners();
+  }
 
   void increment() {
-    entity.increment();
+    store.entity.increment();
+    notifyListeners();
   }
 
   void decrement() {
-    entity.decrement();
+    store.entity.decrement();
+    notifyListeners();
   }
 
   void reset() {
-    entity.reset();
+    store.entity.reset();
+    notifyListeners();
+  }
+
+  setInterval(int value) {
+    store.entity.setInterval(value);
+    notifyListeners();
   }
 }
