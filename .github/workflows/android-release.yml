@@ -3,7 +3,6 @@ name: Contador App Android Release
 on:
   push:
     branches: [ master ]
-    name: Demo App Android Release
 
 jobs:
   version:
