@@ -1,4 +1,9 @@
-on: push
+on: 
+  push:
+    branches:
+      - main
+    tags:
+      - '*'
 name: Test, Build and Release apk
 jobs:
   build:
