@@ -1,7 +1,8 @@
 name: Contador App Android Release
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - main
 
 jobs:
   version:
