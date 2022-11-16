@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 
 class ContadorOneTab extends StatelessWidget {
   final ContadorController controller;
-  ContadorOneTab({
-    Key? key,
+  const ContadorOneTab({super.key, 
     required this.controller,
   });
 
