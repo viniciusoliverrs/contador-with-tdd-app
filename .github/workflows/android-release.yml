@@ -1,9 +1,7 @@
 name: Contador App Android Release
-
 on:
   push:
-    branches: 
-      - main
+    branches: [ master ]
 
 jobs:
   version:
@@ -57,6 +55,6 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         artifacts: "build/app/outputs/apk/release/*.apk,build/app/outputs/bundle/release/app-release.aab"
-        token: "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"
+        token: ${{ secrets.GH_TOKEN }}
         tag: ${{ steps.version.outputs.content }}
         commit: ${{ github.sha }}
