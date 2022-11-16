@@ -6,7 +6,7 @@ import 'components/tabs/contador_two_tab.dart';
 
 class ContadorView extends StatelessWidget {
   final ContadorController controller;
-  ContadorView({super.key, required this.controller});
+  const ContadorView({super.key, required this.controller});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
