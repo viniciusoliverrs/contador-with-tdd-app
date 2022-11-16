@@ -23,4 +23,4 @@ jobs:
       with:
         artifacts: "build/app/outputs/apk/debug/*.apk"
         token: ${{ secrets.GH_TOKEN }}
-        tag: ${{ github.ref }}
+        tag: v1.0.${{ github.run_number }}
