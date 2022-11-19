@@ -22,6 +22,6 @@ jobs:
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
       with:
-        "build/app/outputs/flutter-apk/*.apk ,build/app/outputs/bundle/release/app-release.aab"
+        artifacts: "build/app/outputs/flutter-apk/*.apk ,build/app/outputs/bundle/release/app-release.aab"
         token: ${{ secrets.GH_TOKEN }}
         tag: v1.0.${{ github.run_number }}
