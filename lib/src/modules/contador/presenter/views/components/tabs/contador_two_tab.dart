@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class ContadorTwoTab extends StatelessWidget {
   final ContadorController controller;
-  const ContadorTwoTab({super.key, 
+  const ContadorTwoTab({
+    super.key,
     required this.controller,
   });
 
@@ -14,10 +15,8 @@ class ContadorTwoTab extends StatelessWidget {
       animation: controller,
       builder: (context, child) {
         return Center(
-          child: Text(
-            '${controller.store.entity.value}',
-            style: const TextStyle(fontSize: 40),
-          ),
+          child: Text('${controller.store.entity.value}',
+              style: const TextStyle(fontSize: 40)),
         );
       },
     );
