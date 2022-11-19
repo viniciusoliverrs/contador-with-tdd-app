@@ -8,28 +8,20 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     steps:
-    - name: Get Repository
-    - uses: actions/checkout@v2
-
-    - name: Setup Java
+    - uses: actions/checkout@v1
     - uses: actions/setup-java@v1
       with:
         java-version: '12.x'
-
-    - name: Setup Flutter SDK
-    - uses: subosito/flutter-action@v2
+    - uses: subosito/flutter-action@v1
       with:
         flutter-version: '3.3.8'
-
     - run: flutter pub get
-    - run: flutter test test/unit
+    - run: flutter test
     - run: flutter analyze
-    - run: flutter build apk --release --split-per-abi
-    - run: flutter build appbundle
-
+    - run: flutter build apk
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "build/app/outputs/flutter-apk/*.apk ,build/app/outputs/bundle/release/app-release.aab"
+        "build/app/outputs/flutter-apk/*.apk ,build/app/outputs/bundle/release/app-release.aab"
         token: ${{ secrets.GH_TOKEN }}
         tag: v1.0.${{ github.run_number }}
