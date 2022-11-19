@@ -19,21 +19,12 @@ jobs:
     - name: Setup Flutter SDK
     - uses: subosito/flutter-action@v2
       with:
-        channel: 'stable'
+        channel: '3.3.8'
 
-    - name: Run Flutter Pub Get
     - run: flutter pub get
-
-    - name: Run Flutter Unit Tests
     - run: flutter test test/unit
-
-    - name: Run Flutter Analyze
     - run: flutter analyze
-
-    - name: Run Flutter Build APK
     - run: flutter build apk --release --split-per-abi
-
-    - name: Run Flutter App Bundle
     - run: flutter build appbundle
 
     - name: Create a Release APK
