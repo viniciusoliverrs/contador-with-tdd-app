@@ -26,7 +26,7 @@ jobs:
         artifacts: "build/app/outputs/flutter-apk/*.apk ,build/app/outputs/bundle/release/app-release.aab"
         token: ${{ secrets.GH_TOKEN }}
         tag: v1.0.${{ github.run_number }}
-    - uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v2
         with:
           name: Flutter APK
           path: build/app/outputs/flutter-apk/*.apk
