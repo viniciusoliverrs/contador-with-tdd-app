@@ -20,13 +20,14 @@ jobs:
     - run: flutter analyze
     - run: flutter build apk --release --split-per-abi
     - run: flutter build appbundle
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release.apk
+        path: build/app/outputs/flutter-apk/app-release.apk
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
       with:
         artifacts: "build/app/outputs/flutter-apk/*.apk ,build/app/outputs/bundle/release/app-release.aab"
         token: ${{ secrets.GH_TOKEN }}
         tag: v1.0.${{ github.run_number }}
-      uses: actions/upload-artifact@v2
-        with:
-          name: Flutter APK
-          path: build/app/outputs/flutter-apk/*.apk
