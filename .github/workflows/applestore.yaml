@@ -1,0 +1,43 @@
+name: Deploy to App Store
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '2.10.2' # versão do Flutter a ser usada
+    - name: Get dependencies
+      run: flutter pub get
+    - name: Build iOS
+      run: flutter build ios --release --no-codesign
+    - name: Archive
+      run: |
+        set -eo pipefail
+        xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -archivePath $PWD/build/Runner.xcarchive archive | xcpretty
+    - name: Export
+      run: |
+        set -eo pipefail
+        xcodebuild -exportArchive -archivePath $PWD/build/Runner.xcarchive -exportPath $PWD/build -exportOptionsPlist ios/exportOptions.plist | xcpretty
+      env:
+        # Configuração das variáveis de ambiente para a exportação do arquivo IPA
+        APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        APP_STORE_CONNECT_TEAM_ID: ${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
+    - name: Upload to App Store
+      uses: svisser/create-app-store-release-action@v1.10.0
+      with:
+        # Configuração das variáveis de ambiente para o upload do arquivo IPA para a App Store
+        app_id: ${{ secrets.APP_ID }}
+        ipa_path: ${{ github.workspace }}/build/Runner.ipa
+        api_key_content: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+        issuer_id: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        key_id: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        team_id: ${{ secrets.APP_STORE_CONNECT_TEAM_ID }}
+        changelog: "Nova versão do aplicativo"
