@@ -1,0 +1,33 @@
+name: Deploy to Play Store
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '2.10.2' # versão do Flutter a ser usada
+    - name: Get dependencies
+      run: flutter pub get
+    - name: Build APK
+      run: flutter build apk --release
+      env:
+        # Configuração das variáveis de ambiente para a compilação do APK
+        KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+    - name: Upload to Play Store
+      uses: r0adkll/upload-google-play@v1.1.1
+      with:
+        # Configuração das variáveis de ambiente para o upload do APK para a Play Store
+        service_account_email: ${{ secrets.SERVICE_ACCOUNT_EMAIL }}
+        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+        package_name: com.example.myapp
+        track: 'internal'
+        apk: 'build/app/outputs/flutter-apk/app-release.apk'
